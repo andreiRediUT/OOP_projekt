@@ -26,11 +26,12 @@ public class Täringumäng {
 
             int täring = random_number();
             this.vooruskoor += täring;
-            System.out.println(esimese_kord ? "Esimene mängija veeretas " + täring: "Teine Mängija veeretas " + täring);
+            System.out.println(esimese_kord ? " ".repeat(40) +  "Esimene mängija veeretas " + täring : " ".repeat(40) +"Teine Mängija veeretas " + täring);
+
 
             if (täring == 1) poole_vahetus(true);
 
-            System.out.println("Kui soovid lõpetada, siis kirjuta  - \"ff\" ");
+            System.out.println("Kui soovid anda käigu üle, siis kirjuta  - \"ff\" ");
             String input = scanner.nextLine();
 
             if (input.equals("ff") ) {
@@ -49,7 +50,7 @@ public class Täringumäng {
         this.vooruskoor = 0;
 
         this.esimese_kord = !esimese_kord;
-        System.out.println("\nEsimese skoor " + this.skoor[0] + "     ---------------    " + "  Teise skoor  " + this.skoor[1]);
+        System.out.println("\nEsimese skoor " + this.skoor[0] + "     ---------------    " + "  Teise skoor  " + this.skoor[1] + "\n");
         System.out.println("Nüüd on " + (esimese_kord ? " Esimese mängija" : "Teise mängija kord"));
 
     }
