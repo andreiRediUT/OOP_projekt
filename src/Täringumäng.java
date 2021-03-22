@@ -2,14 +2,12 @@ import java.util.Scanner;
 
 public class Täringumäng {
     private boolean esimese_kord;
-    private int[] skoor;
-    private final int lõpp_skoor;
-    private int vooruskoor;
+
+    Skoor skoor;
 
     public Täringumäng() {
         this.esimese_kord = true;
-        this.lõpp_skoor = 91;
-        this.skoor = new int[2];
+        this.skoor = new Skoor(91);
     }
 
     public void alusta() {
@@ -24,8 +22,10 @@ public class Täringumäng {
 
             // küsin mängijalt, et äkki annab käigu edasi, kui korduvalt veeretanud ja ei ole 1 saanud.
 
+            if (this.skoor.keegiVõitnud() != -1) break;   // Lõpetab programmi tööd kui keegi saanud skoori täis
+
             int täring = random_number();
-            this.vooruskoor += täring;
+            this.skoor.setVooruskoor(täring);
             System.out.println(esimese_kord ? " ".repeat(40) +  "Esimene mängija veeretas " + täring : " ".repeat(40) +"Teine Mängija veeretas " + täring);
 
 
@@ -35,22 +35,34 @@ public class Täringumäng {
             String input = scanner.nextLine();
 
             if (input.equals("ff") ) {
-
                 this.poole_vahetus(false);
                 continue;
             }
 
         }
 
+        // Mängu võitja kuulutamine.
+
+        this.skoor.prindiSkoor();
+
+        System.out.println("" +
+                "\n 🥇🥇🥇🥇🥇 Mängu võitis "
+                + (this.skoor.keegiVõitnud() == 0 ?  "Esimene": "Teine")
+                + " mängija 🥇🥇🥇🥇🥇🥇\n" );
+
+        System.out.println("   Palju õnne!  ");
+
     }
 
     protected void poole_vahetus(boolean täring) {
-        if (!täring) skoor[esimese_kord ? 0: 1] += vooruskoor;
 
-        this.vooruskoor = 0;
+        if (!täring) this.skoor.liidaSkoor(esimese_kord);
+
+        this.skoor.setVooruskoor(0);   // kui on null, siis nullib vooruskoori
 
         this.esimese_kord = !esimese_kord;
-        System.out.println("\nEsimese skoor " + this.skoor[0] + "     ---------------    " + "  Teise skoor  " + this.skoor[1] + "\n");
+
+        this.skoor.prindiSkoor();
         System.out.println("Nüüd on " + (esimese_kord ? " Esimese mängija" : "Teise mängija kord"));
 
     }
@@ -59,10 +71,6 @@ public class Täringumäng {
        return  (int) ((Math.random() * (6 - 1)) + 1);
     }
 
-    public void skoor () {
-        System.out.println("\nEsimese skoor " + this.skoor[0] + "     ---------------    " + "  Teise skoor  " + this.skoor[1]);
-
-    }
 
     protected void reeglid() {
         System.out.println( "Mängijad viskavad täringut korda mööda. ");
