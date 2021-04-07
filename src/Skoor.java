@@ -9,7 +9,9 @@ public class Skoor {
         this.vooruskoor = 0;
     }
 
-    public void prindiSkoor() {        System.out.println("\nEsimese skoor " + this.skoor[0] + "     ---------------    " + "  Teise skoor  " + this.skoor[1] + "\n");
+    public void prindiSkoor() {
+        System.out.println("\nEsimese skoor " + this.skoor[0] + "     ---------------    " + "  Teise skoor  "
+                + this.skoor[1] + "\n");
 
     }
 

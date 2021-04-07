@@ -2,12 +2,14 @@ import java.util.Scanner;
 
 public class Täringumäng {
     private boolean esimese_kord;
+    private KuueNumbriTäring täring;
 
-    Skoor skoor;
+    private Skoor skoor;
 
     public Täringumäng() {
         this.esimese_kord = true;
         this.skoor = new Skoor(91);
+        this.täring = new KuueNumbriTäring();
     }
 
     public void alusta() {
@@ -24,14 +26,18 @@ public class Täringumäng {
 
             if (this.skoor.keegiVõitnud() != -1) break;   // Lõpetab programmi tööd kui keegi saanud skoori täis
 
-            int täring = random_number();
-            this.skoor.setVooruskoor(täring);
-            System.out.println(esimese_kord ? " ".repeat(40) +  "Esimene mängija veeretas " + täring : " ".repeat(40) +"Teine Mängija veeretas " + täring);
+            täring.täringuVeeretus();
+            this.skoor.setVooruskoor(täring.getVeeretus());
+            System.out.println(esimese_kord ? " ".repeat(40) +  "Esimene mängija veeretas " + täring.getVeeretus() : " ".repeat(40) +"Teine Mängija veeretas " + täring.getVeeretus());
 
 
-            if (täring == 1) poole_vahetus(true);
+            if (täring.getVeeretus() == 1) poole_vahetus(true);
 
             System.out.println("Kui soovid anda käigu üle, siis kirjuta  - \"ff\" ");
+
+            System.out.print(esimese_kord ? "\nⅠ.mängija vooruskoor - " : "\nⅡ.mängija vooruskoor -  ");
+            System.out.print(skoor.getVooruskoor());   // kuvab hetkevooru mängija skoori
+
             String input = scanner.nextLine();
 
             if (input.equals("ff") ) {
@@ -67,9 +73,9 @@ public class Täringumäng {
 
     }
 
-    public int random_number() {
-       return  (int) ((Math.random() * (6 - 1)) + 1);
-    }
+//    public int random_number() {
+//       return  (int) ((Math.random() * (6 - 1)) + 1);
+//    }
 
 
     protected void reeglid() {
@@ -77,6 +83,7 @@ public class Täringumäng {
         System.out.println("Ühes viskevoorus võib mängija visata täringuid ükskõik mitu korda");
         System.out.println("aga kui tuleb 1, siis kogusumma nullitakse ja viskeõigus läheb teisele mängijale.");
         System.out.println("Viskel saadud tulemus liidetakse kogusummale. Võidab see, kes saab enne üle 91 punkti. ");
+        System.out.println("Täringu viskamiseks vajuta ENTER");
 
         System.out.println("\nAlustab esimene mängija.");
     }
