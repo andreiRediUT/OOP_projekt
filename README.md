@@ -36,8 +36,15 @@ Klass, kus toimub programmi põhitöö. Selle klassi abil käivitatakse mäng. K
 
 
 ## Projekti protsess
+Protsessi alustamine võttis aega sest kohe ei osanud välja mõelda teemat mida võiks lahendada projektiga. 
+Seetõttu pöördusime etteantud ideede variantide poole ja valisime sealt täringumängu.
+
+Klasside kirjutamine ja nende testimisele kulus 3 nädalat.
 
 ## Rühmaliikmete panus
+Andrei Redi koostas klassid Täringumäng, Skoor ja Testklass
+Priit Rooden koostas klassi KuueNubriTäring
+
 
 ## Tegemise mured
 
