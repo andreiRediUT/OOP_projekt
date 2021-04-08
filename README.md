@@ -42,7 +42,7 @@ Seetõttu pöördusime etteantud ideede variantide poole ja valisime sealt täri
 Klasside kirjutamine ja nende testimisele kulus 3 nädalat.
 
 ## Rühmaliikmete panus
-Andrei Redi koostas klassid  Skoor ja Testklass
+Andrei Redi koostas klassid  Skoor ja Testklass.
 Priit Rooden koostas klassi KuueNubriTäring.
 
 Mõlemad koos töötasime klassi Täringumängu kallal. 
