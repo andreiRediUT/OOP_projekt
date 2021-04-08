@@ -24,6 +24,8 @@ public class Skoor {
         return vooruskoor;
     }
 
+    public int[] getSkoor() {return this.skoor;}
+
     public void setVooruskoor(int vooruskoor) {   // jälgib ühe mängija skoori koguaeg, saab ka nullida.
         this.vooruskoor = vooruskoor==0 ? 0 : this.vooruskoor + vooruskoor;
 

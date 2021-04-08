@@ -38,6 +38,8 @@ public class Täringumäng {
             System.out.print(esimese_kord ? "\nⅠ.mängija vooruskoor - " : "\nⅡ.mängija vooruskoor -  ");
             System.out.print(skoor.getVooruskoor());   // kuvab hetkevooru mängija skoori
 
+            System.out.print(" ".repeat(20) + "Üldskoor " + skoor.getSkoor()[0] + " | " + skoor.getSkoor()[1]);
+
             String input = scanner.nextLine();
 
             if (input.equals("ff") ) {
