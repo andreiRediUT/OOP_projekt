@@ -19,27 +19,27 @@ Klassi eesmärk on luua täringu objekt, mis väljastab täringuveeretuse tulemu
 Tegemist on kuuetahulise täringuga, vastavalt sellele väljastatakse ka suvalise numbri ühest kuueni. 
 
 - täringuVeeretus() – genereerib suvalise numbri 1st  6ni
-- getVeeretus() - väljastab, mida meetod täringuVeeretus() genereeris
+- getVeeretus() – väljastab, mida meetod täringuVeeretus() genereeris
 
 ### Skoor
 
+Klassi eesmärk on luua objekt kahemängija skoori pidamiseks. Kahemängija skoori salvestamiseks on kahe  elemendiline järjend. Esimene element esimese mängija jaoks, teine element teise. Klass skoor ka peab ajutist vooruskoori, mida saab ka nullida.
+
+- prindiSkoor() – prindib mängijate üldskoori.
+- liidaSkoor() – liidab ajutist vooruskoori üldskoorile. Tuvastab _boolean_ parameetriga, millise mängija kord on. 
+- keegiVõitnud() – kontrollib peale igat vooru, kas keegi on saanud 91 punkti täis. 
 
 
 ### Täringumäng
 
+Klass, kus toimub programmi põhitöö. Selle klassi abil käivitatakse mäng. Klassis kasutatakse klasse nagu Skoor ja KuueNumbritäring. Mäng ise ehitatud lõpmatu _while_ tsükli peal. 
+
 
 ## Projekti protsess
-Protsessi alustamine võttis aega sest kohe ei osanud välja mõelda teemat mida võiks lahendada projektiga. 
-Seetõttu pöördusime etteantud ideede variantide poole ja valisime sealt täringumängu.
-
-Klasside kirjutamine ja nende testimisele kulus 3 nädalat.
 
 ## Rühmaliikmete panus
-Andrei Redi koostas klassid Täringumäng, Skoor ja Testklass
-Priit Rooden koostas klassi KuueNubriTäring
 
 ## Tegemise mured
-
 
 ## Hinnang tööle
 
