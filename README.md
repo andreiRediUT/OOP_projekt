@@ -27,6 +27,16 @@ Tegemist on kuuetahulise täringuga, vastavalt sellele väljastatakse ka suvalis
 
 ### Täringumäng
 
+## Projekti protsess
+
+## Rühmaliikmete panus
+
+## Tegemise mured
+
+## Hinnang tööle
+
+## Testimine
+
 
 
   Koostada klassid Täring ja Täringumäng jäljendamaks kahe mängija mängu. 
