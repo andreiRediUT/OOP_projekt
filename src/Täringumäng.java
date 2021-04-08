@@ -27,18 +27,18 @@ public class Täringumäng {
             if (this.skoor.keegiVõitnud() != -1) break;   // Lõpetab programmi tööd kui keegi saanud skoori täis
 
             täring.täringuVeeretus();
-            this.skoor.setVooruskoor(täring.getVeeretus());
+            this.skoor.setVooruskoor(täring.getVeeretus());   // ajutine skoor, mida pärast lisatakse üldskoorile
             System.out.println(esimese_kord ? " ".repeat(40) +  "Esimene mängija veeretas " + täring.getVeeretus() : " ".repeat(40) +"Teine Mängija veeretas " + täring.getVeeretus());
 
 
             if (täring.getVeeretus() == 1) poole_vahetus(true);
 
-            System.out.println("Kui soovid anda käigu üle, siis kirjuta  - \"ff\" ");
+            System.out.println("Käigu üleandmiseks, kirjuta  - \"ff\" ");
 
             System.out.print(esimese_kord ? "\nⅠ.mängija vooruskoor - " : "\nⅡ.mängija vooruskoor -  ");
             System.out.print(skoor.getVooruskoor());   // kuvab hetkevooru mängija skoori
 
-            System.out.print(" ".repeat(20) + "Üldskoor " + skoor.getSkoor()[0] + " | " + skoor.getSkoor()[1]);
+            System.out.println(" ".repeat(20) + "Üldskoor " + skoor.getSkoor()[0] + " | " + skoor.getSkoor()[1]);
 
             String input = scanner.nextLine();
 
