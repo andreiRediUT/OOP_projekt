@@ -14,9 +14,10 @@ public class Täringumäng {
 
     public void alusta() {
 
-        this. reeglid();   // prindib reeglid
 
-          // mängija skoor kuni ta ise lõpetab või saab 1
+        this. reeglid();   //prindib reeglid
+
+        // mängija skoor kuni ta ise lõpetab või saab 1
 
         Scanner scanner = new Scanner(System.in);
 
@@ -62,6 +63,13 @@ public class Täringumäng {
 
     }
 
+    /**
+     *
+     * @param täring Kui on True, siis kutsuti funktsioon täringuviskest "1". Üldskoorile ei liideta vooruskoor
+     *               Voorukord läheb teisele mängijale üle.
+     *               Kui on False, siis mängija loobus voorust vabatahtlikult, kirjutades "ff".
+     *               Liidetake vooruskoor üldskoorile ja kord läheb teisele mängija üle. 
+     */
     protected void poole_vahetus(boolean täring) {
 
         if (!täring) this.skoor.liidaSkoor(esimese_kord);
