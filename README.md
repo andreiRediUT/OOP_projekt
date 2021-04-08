@@ -34,6 +34,10 @@ Klassi eesmärk on luua objekt kahemängija skoori pidamiseks. Kahemängija skoo
 
 Klass, kus toimub programmi põhitöö. Selle klassi abil käivitatakse mäng. Klassis kasutatakse klasse nagu Skoor ja KuueNumbritäring. Mäng ise ehitatud lõpmatu _while_ tsükli peal. 
 
+- alusta() – Paneb käima koguprogrammi. Kutsuma peaks _main_ meetodis. 
+- reeglid() – Saab panna printima mängu kirjelduse ja reegleid.
+- poole_vahetus() - mängu siseselt pooltevahetus, et kelle kord täringuid veeretada. Parameetriks võtab booleani, mis näitab, kas pooltevahetus tuli viskes täringuviskest "1" või vabatahtlikult kirjutades "ff".
+
 
 ## Projekti protsess
 Protsessi alustamine võttis aega sest kohe ei osanud välja mõelda teemat mida võiks lahendada projektiga. 
@@ -43,11 +47,10 @@ Klasside kirjutamine ja nende testimisele kulus 3 nädalat.
 
 ## Rühmaliikmete panus
 Andrei Redi koostas klassid  Skoor ja Testklass.
-Priit Rooden koostas klassi KuueNubriTäring.
+Priit Rooden koostas klassi KuueNumbriTäring.
 
 Mõlemad koos töötasime klassi Täringumängu kallal. 
 Saab öelda, et mõlema panus on 50%/50%.
-
 
 ## Tegemise mured
 
@@ -55,6 +58,8 @@ Saab öelda, et mõlema panus on 50%/50%.
 
 ## Testimine
 
+Teste eraldi klassidel ei kirjutanud. Jooksvalt katsetasime iga klassi konstruktori õigsust ning kas iga meetod tagastab või väljastab õiget väärtust. 
+Täringumängu läbisime korduvalt läbi, kuid väiksemas mahus - 10 punkti lõppskooriga.
 
 
   Koostada klassid Täring ja Täringumäng jäljendamaks kahe mängija mängu. 
@@ -64,9 +69,9 @@ Saab öelda, et mõlema panus on 50%/50%.
 
 - [x] autorite nimed;
 - [x] projekti põhjalik kirjeldus, kus on kirjas programmi eesmärk ja selgitus programmi üldisest tööst, vajadusel lühike kasutusjuhis;
-- [ ] iga klassi kohta eraldi selle eesmärk ja olulisemad meetodid;
-- [ ] projekti tegemise protsessi kirjeldus (erinevad etapid ja rühmaliikmete osalemine neis);
-- [ ] iga rühmaliikme panus (sh tehtud klassid/meetodid) ja ajakulu (orienteeruvalt);- 
-- [ ] tegemise mured (nt millistest teadmistest/oskustest tundsite projekti tegemisel puudust);
-- [ ] hinnang oma töö lõpptulemusele (millega saite hästi hakkama ja mis vajab arendamist);- 
-- [ ] selgitus ja/või näited, kuidas programmi osi eraldi ja programmi tervikuna testisite ehk kuidas veendusite, et programm töötab korrektselt.
+- [x] iga klassi kohta eraldi selle eesmärk ja olulisemad meetodid;
+- [x] projekti tegemise protsessi kirjeldus (erinevad etapid ja rühmaliikmete osalemine neis);
+- [x] iga rühmaliikme panus (sh tehtud klassid/meetodid) ja ajakulu (orienteeruvalt);- 
+- [x] tegemise mured (nt millistest teadmistest/oskustest tundsite projekti tegemisel puudust);
+- [x] hinnang oma töö lõpptulemusele (millega saite hästi hakkama ja mis vajab arendamist);- 
+- [x] selgitus ja/või näited, kuidas programmi osi eraldi ja programmi tervikuna testisite ehk kuidas veendusite, et programm töötab korrektselt.
