@@ -42,8 +42,11 @@ Seetõttu pöördusime etteantud ideede variantide poole ja valisime sealt täri
 Klasside kirjutamine ja nende testimisele kulus 3 nädalat.
 
 ## Rühmaliikmete panus
-Andrei Redi koostas klassid Täringumäng, Skoor ja Testklass
-Priit Rooden koostas klassi KuueNubriTäring
+Andrei Redi koostas klassid  Skoor ja Testklass
+Priit Rooden koostas klassi KuueNubriTäring.
+
+Mõlemad koos töötasime klassi Täringumängu kallal. 
+Saab öelda, et mõlema panus on 50%/50%.
 
 
 ## Tegemise mured
