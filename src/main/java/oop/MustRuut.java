@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -21,15 +22,13 @@ import java.io.FileNotFoundException;
 public class MustRuut extends Application {
 
     KuueNumbriTäring täring = new KuueNumbriTäring();
-    boolean esimese_kord = true;
 
-    Skoor skoor = new Skoor(91);
+    Skoor mängu_skoor = new Skoor(91);
 
 
     public static void main(String[] args) {
         launch(args);
     }
-
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
@@ -48,15 +47,21 @@ public class MustRuut extends Application {
 //
 //        StackPane täringupilt = new StackPane(pilt);
         Text veeretus = new Text("0");
+        Text skoor = new Text("0");
+        skoor.setFont(Font.font(50));
+        VBox veeretus_skoor = new VBox(veeretus, skoor );
         veeretus.setFont(Font.font("Verdana", 100));
 
         BorderPane border = new BorderPane();
         border.setPadding(new Insets(10, 20, 10, 20));
 
-        VBox nupud = new VBox(veeretus, btn1, btn2);
+
+        HBox nupud = new HBox( btn1, btn2);
+        nupud.setSpacing(10);
+        VBox kesk = new VBox(veeretus_skoor, nupud);
 
 
-        nupud.setPadding(new Insets(15, 100, 15, 100));
+        kesk.setPadding(new Insets(15, 100, 15, 100));
         nupud.setCenterShape(true);
 
         Text nimetus1 = new Text("Mängija 1");
@@ -81,7 +86,7 @@ public class MustRuut extends Application {
         StackPane pealkiri = new StackPane(t);
 
 
-        border.setCenter(nupud);
+        border.setCenter(kesk);
         border.setTop(pealkiri);
         border.setLeft(vasak);
         border.setRight(parem);
@@ -98,7 +103,14 @@ public class MustRuut extends Application {
             @Override
             public void handle(ActionEvent event) {
                 täring.täringuVeeretus();
+
                 veeretus.setText(Integer.toString(täring.getVeeretus()));
+
+                mängu_skoor.setVooruskoor(täring.getVeeretus());
+                skoor.setText(Integer.toString(mängu_skoor.getVooruskoor()));
+
+                if (täring.getVeeretus() == 1)
+                    mängu_skoor.poole_vahetus(true);
 
             }
         });
@@ -107,6 +119,14 @@ public class MustRuut extends Application {
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+                mängu_skoor.liidaSkoor();
+                mängu_skoor.poole_vahetus(false);
+
+                mängija1.setText(Integer.toString(mängu_skoor.getSkoor()[0]));
+                mängija2.setText(Integer.toString(mängu_skoor.getSkoor()[1]));
+                skoor.setText("0");
+                veeretus.setText("");
 
             }
         });
