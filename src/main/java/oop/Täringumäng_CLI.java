@@ -2,13 +2,13 @@ package oop;
 
 import java.util.Scanner;
 
-public class Täringumäng {
+public class Täringumäng_CLI {
     private boolean esimese_kord;
     private KuueNumbriTäring täring;
 
     private Skoor skoor;
 
-    public Täringumäng() {
+    public Täringumäng_CLI() {
         this.esimese_kord = true;
         this.skoor = new Skoor(91);
         this.täring = new KuueNumbriTäring();
