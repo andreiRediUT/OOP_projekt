@@ -14,9 +14,10 @@ public class Täringumäng {
 
     public void alusta() {
 
-        this. reeglid();   // prindib reeglid
 
-          // mängija skoor kuni ta ise lõpetab või saab 1
+        this.reeglid();   //prindib reeglid
+
+        // mängija skoor kuni ta ise lõpetab või saab 1
 
         Scanner scanner = new Scanner(System.in);
 
@@ -28,7 +29,7 @@ public class Täringumäng {
 
             täring.täringuVeeretus();
             this.skoor.setVooruskoor(täring.getVeeretus());   // ajutine skoor, mida pärast lisatakse üldskoorile
-            System.out.println(esimese_kord ? " ".repeat(40) +  "Esimene mängija veeretas " + täring.getVeeretus() : " ".repeat(40) +"Teine Mängija veeretas " + täring.getVeeretus());
+            System.out.println(esimese_kord ? " ".repeat(40) + "Esimene mängija veeretas " + täring.getVeeretus() : " ".repeat(40) + "Teine Mängija veeretas " + täring.getVeeretus());
 
 
             if (täring.getVeeretus() == 1) poole_vahetus(true);
@@ -42,7 +43,7 @@ public class Täringumäng {
 
             String input = scanner.nextLine();
 
-            if (input.equals("ff") ) {
+            if (input.equals("ff")) {
                 this.poole_vahetus(false);
                 continue;
             }
@@ -55,13 +56,19 @@ public class Täringumäng {
 
         System.out.println("" +
                 "\n 🥇🥇🥇🥇🥇 Mängu võitis "
-                + (this.skoor.keegiVõitnud() == 0 ?  "Esimene": "Teine")
-                + " mängija 🥇🥇🥇🥇🥇🥇\n" );
+                + (this.skoor.keegiVõitnud() == 0 ? "Esimene" : "Teine")
+                + " mängija 🥇🥇🥇🥇🥇🥇\n");
 
         System.out.println("   Palju õnne!  ");
 
     }
 
+    /**
+     * @param täring Kui on True, siis kutsuti funktsioon täringuviskest "1". Üldskoorile ei liideta vooruskoor
+     *               Voorukord läheb teisele mängijale üle.
+     *               Kui on False, siis mängija loobus voorust vabatahtlikult, kirjutades "ff".
+     *               Liidetake vooruskoor üldskoorile ja kord läheb teisele mängija üle.
+     */
     protected void poole_vahetus(boolean täring) {
 
         if (!täring) this.skoor.liidaSkoor(esimese_kord);
@@ -81,7 +88,7 @@ public class Täringumäng {
 
 
     protected void reeglid() {
-        System.out.println( "Mängijad viskavad täringut korda mööda. ");
+        System.out.println("Mängijad viskavad täringut korda mööda. ");
         System.out.println("Ühes viskevoorus võib mängija visata täringuid ükskõik mitu korda");
         System.out.println("aga kui tuleb 1, siis kogusumma nullitakse ja viskeõigus läheb teisele mängijale.");
         System.out.println("Viskel saadud tulemus liidetakse kogusummale. Võidab see, kes saab enne üle 91 punkti. ");
