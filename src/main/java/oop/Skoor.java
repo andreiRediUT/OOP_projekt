@@ -82,12 +82,18 @@ public class Skoor {
      */
     public int keegiVõitnud() {
         for (int i = 0; i < this.skoor.length; i++) {
-            if (this.skoor[i] >= this.lõpp_skoor) {
+            if (this.skoor[i]  >= this.lõpp_skoor) {
                 return i;
             }
         }
 
         return -1;
+
+    }
+
+    public boolean kasOnVõitnud() {
+
+        return this.skoor[esimese_kord ? 0: 1] + this.vooruskoor >= this.lõpp_skoor;
 
     }
 }

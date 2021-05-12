@@ -1,12 +1,15 @@
 package oop;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -22,6 +25,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class MustRuut extends Application {
 
@@ -70,13 +74,14 @@ public class MustRuut extends Application {
         kesk.setPadding(new Insets(15, 100, 15, 100));
         nupud.setCenterShape(true);
 
+        border.setPadding(new Insets(15, 10, 12, 12));
         border.setCenter(kesk);
         border.setTop(title());
         border.setLeft(mängija("Mängija 1", 0, true));
         border.setRight(mängija("Mängija 2", 0 , false));
 
 
-        Scene scene = new Scene(border, 700 , 300);
+        Scene scene = new Scene(border, 750 , 350);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Täringumäng");
         primaryStage.show();
@@ -85,9 +90,9 @@ public class MustRuut extends Application {
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (mängu_skoor.keegiVõitnud() == -1) {
-                    // TODO võiduvärk
-                }
+                veeretus.setFill(Color.BLACK);
+
+
                 täring.täringuVeeretus();
 
                 veeretus.setText(Integer.toString(täring.getVeeretus()));
@@ -95,11 +100,31 @@ public class MustRuut extends Application {
                 mängu_skoor.setVooruskoor(täring.getVeeretus());
                 skoor.setText(Integer.toString(mängu_skoor.getVooruskoor()));
 
-                if (täring.getVeeretus() == 1)
+                if (täring.getVeeretus() == 1){
                     mängu_skoor.poole_vahetus(true);
+                    veeretus.setFill(Color.RED);
+                }
+
 
                 border.setLeft(mängija("Mängija 1 ", mängu_skoor.getSkoor()[0], mängu_skoor.isEsimese_kord()));
                 border.setRight(mängija("Mängija 2 ", mängu_skoor.getSkoor()[1], !mängu_skoor.isEsimese_kord()));
+
+                System.out.println(mängu_skoor.keegiVõitnud());
+                if (mängu_skoor.kasOnVõitnud()) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Dialog");
+                    alert.setHeaderText("Look, a Confirmation Dialog");
+                    alert.setContentText("Are you ok with this?");
+                    System.out.println(mängu_skoor.isEsimese_kord());
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK){
+                        System.out.println("JAH");
+                    } else {
+                        System.out.println("EI");
+                        Platform.exit();
+                    }
+
+                }
 
             }
         });
@@ -120,6 +145,8 @@ public class MustRuut extends Application {
                 skoor.setText("0");
                 veeretus.setText("");
 
+
+
             }
         });
     }
@@ -132,14 +159,14 @@ public class MustRuut extends Application {
         m_skoor.setFont(Font.font("Verdana", 100));
 
         if (tema_kord)
-            return new VBox(  nimetus,  m_skoor, kelle_kord() );
+            return new VBox(  nimetus,  m_skoor,  kelle_kord() );
 
         return new VBox(nimetus, m_skoor);
     }
 
     private Text kelle_kord() {
-        Text nimetus = new Text("Kord");
-        nimetus.setFont(Font.font("Verdana", FontWeight.BOLD,  20));
+        Text nimetus = new Text("KORD");
+        nimetus.setFont(Font.font("Verdana", FontWeight.BOLD,  35));
         nimetus.resize(200, 200);
         nimetus.setFill(Color.RED);
         nimetus.setStyle("-colour: #FF0000;");
