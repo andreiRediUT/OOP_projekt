@@ -22,8 +22,12 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+<<<<<<< HEAD:src/main/java/oop/MustRuut.java
+=======
+import java.util.Stack;
+>>>>>>> Graafiline:src/main/java/oop/TäringuMäng.java
 
-public class MustRuut extends Application {
+public class TäringuMäng extends Application {
 
     KuueNumbriTäring täring = new KuueNumbriTäring();
 
@@ -73,8 +77,13 @@ public class MustRuut extends Application {
         border.setTop(title());
         border.setLeft(mängija("Mängija 1", 0, true));
         border.setRight(mängija("Mängija 2", 0 , false));
+<<<<<<< HEAD:src/main/java/oop/MustRuut.java
 
 
+=======
+
+
+>>>>>>> Graafiline:src/main/java/oop/TäringuMäng.java
         Scene scene = new Scene(border, 700 , 300);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Täringumäng");
@@ -138,7 +147,11 @@ public class MustRuut extends Application {
 
     private Text kelle_kord() {
         Text nimetus = new Text("Kord");
+<<<<<<< HEAD:src/main/java/oop/MustRuut.java
         nimetus.setFont(Font.font("Verdana", FontWeight.BOLD,  20));
+=======
+        nimetus.setFont(Font.font("Verdana", 20));
+>>>>>>> Graafiline:src/main/java/oop/TäringuMäng.java
         nimetus.resize(200, 200);
         nimetus.setFill(Color.RED);
         nimetus.setStyle("-colour: #FF0000;");
@@ -155,4 +168,10 @@ public class MustRuut extends Application {
         return pealkiri;
     }
 
+<<<<<<< HEAD:src/main/java/oop/MustRuut.java
+=======
+
+
+
+>>>>>>> Graafiline:src/main/java/oop/TäringuMäng.java
 }
