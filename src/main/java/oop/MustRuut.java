@@ -36,7 +36,7 @@ import java.util.Optional;
 public class MustRuut extends Application {
 
     KuueNumbriTäring täring = new KuueNumbriTäring();
-    Skoor mängu_skoor = new Skoor(10);
+    Skoor mängu_skoor = new Skoor(91);
 
 
     public static void main(String[] args) {
@@ -334,9 +334,8 @@ public class MustRuut extends Application {
                 stat.keySet()) {
             series1.getData().add(new XYChart.Data(Integer.toString(i), stat.get(i)));
         }
-        //Scene scene = new Scene(bc, 800, 600);
+
         bc.getData().addAll(series1);
-        //stage.setScene(scene);
 
         return bc;
 
