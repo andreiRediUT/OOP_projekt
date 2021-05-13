@@ -1,5 +1,7 @@
 package oop;
 
+import java.util.HashMap;
+
 public class Skoor {
 
 
@@ -8,9 +10,7 @@ public class Skoor {
     private int vooruskoor;
     private boolean esimese_kord;
 
-    public void setSkoor(int[] skoor) {
-        this.skoor = skoor;
-    }
+
 
     /**
      * @param lõpp_skoor konstruktortoriga saab määrata, mis skoorini täringumängu mängitakse.
@@ -20,6 +20,11 @@ public class Skoor {
         this.skoor = new int[2];  // esimene element järjendis on Esimese mängija skoor, teine element on Teise
         this.lõpp_skoor = lõpp_skoor;
         this.vooruskoor = 0;
+
+
+    }
+    public void setSkoor(int[] skoor) {
+        this.skoor = skoor;
     }
 
     public void prindiSkoor() {
@@ -99,4 +104,6 @@ public class Skoor {
         return this.skoor[esimese_kord ? 0: 1] + this.vooruskoor >= this.lõpp_skoor;
 
     }
+
+
 }

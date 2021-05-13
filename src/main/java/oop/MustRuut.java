@@ -6,16 +6,23 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -25,8 +32,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Optional;
 
+@SuppressWarnings("ALL")
 public class MustRuut extends Application {
 
     KuueNumbriTäring täring = new KuueNumbriTäring();
@@ -42,19 +51,11 @@ public class MustRuut extends Application {
         Button btn1 = new Button("Veereta");
         Button btn2 = new Button("Anna käik üle.");
 
-//        Image piltFail = new Image(new FileInputStream("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\java\\oop\\pildid\\täring.png"));
-//        ImageView pilt = new ImageView(piltFail);
-//        pilt.setFitHeight(100);
-//        pilt.setPreserveRatio(true);
-//
-//        StackPane täringupilt = new StackPane(pilt);
-
         BorderPane border = new BorderPane();
 
         HBox nupud = new HBox(btn1, btn2);
         nupud.setAlignment(Pos.CENTER);
         nupud.setSpacing(10);
-
 
         VBox kesk = täring_vooruskoor(nupud, true);
 
@@ -67,9 +68,15 @@ public class MustRuut extends Application {
         border.setTop(title());
         border.setLeft(mängija("Mängija 1", 0, true));
         border.setRight(mängija("Mängija 2", 0, false));
+        Text teade = new Text("Võidab see, kes saab enne üle 91 punkti.");
+        teade.setFont(Font.font("Verdana", 20));
+
+        border.setBottom(teade);
 
 
         Scene scene = new Scene(border, 750, 350);
+        primaryStage.setMinHeight(350);
+        primaryStage.setMinWidth(570);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Täringumäng");
 
@@ -90,7 +97,7 @@ public class MustRuut extends Application {
 
                 if (täring.getVeeretus() == 1) {
                     mängu_skoor.poole_vahetus(true);
-                   // veeretus.setFill(Color.RED);  TODO teha punaseks täring kui 1
+                    // veeretus.setFill(Color.RED);  TODO teha punaseks täring kui 1
                 }
 
                 border.setCenter(täring_vooruskoor(nupud, false));
@@ -102,7 +109,6 @@ public class MustRuut extends Application {
                     mängu_skoor.setSkoor(new int[]{0, 0});
 
                     border.setCenter(täring_vooruskoor(nupud, true));
-
 
                 }
             }
@@ -119,11 +125,10 @@ public class MustRuut extends Application {
                 System.out.println(Arrays.toString(mängu_skoor.getSkoor()));
 
 
-              //  veeretus.setText("");  TODO
+                //  veeretus.setText("");  TODO
             }
         });
     }
-
 
 
     private VBox mängija(String nimi, int skoor, boolean tema_kord) {
@@ -164,7 +169,8 @@ public class MustRuut extends Application {
 
             ButtonType uuesti = new ButtonType("Jah");
             ButtonType exit = new ButtonType("Ei");
-            alert.getButtonTypes().setAll(uuesti, exit);
+            ButtonType stats = new ButtonType("Statistika");
+            alert.getButtonTypes().setAll(uuesti, exit, stats);
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == uuesti) {
@@ -172,12 +178,24 @@ public class MustRuut extends Application {
 
                 return true;
 
-            } else {
+            } else if (result.get() == exit) {
                 System.out.println("EI");
                 Platform.exit();
+            } else {   // STATISTIKA kuvamine
+                Label secondLabel = new Label("Statisti,a");
+                Scene secondScene = new Scene(statistikaGraaf(), 400, 300);
+
+                // New window (Stage)
+                Stage newWindow = new Stage();
+                newWindow.setTitle("Statistika");
+
+                newWindow.setScene(secondScene);
+
+                newWindow.show();
             }
         }
         return false;
+
     }
 
     private VBox täring_vooruskoor(HBox nupud, boolean algus) {
@@ -208,7 +226,6 @@ public class MustRuut extends Application {
         Text t = new Text(10, 20, "TÄRINGUMÄNG");
         t.setFont(Font.font("Verdana", 25));
 
-        //pealkiri.setStyle("-fx-background-colour: #FF0000;");
 
         return new StackPane(t);
     }
@@ -244,7 +261,10 @@ public class MustRuut extends Application {
 
         if (tühi) return canvas;
         if (täring.getVeeretus() == 1) {
+            gc.setFill(Color.RED);
+            gc.setStroke(Color.RED);
             gc.fillOval(50, 50, 10, 10);// keskmine
+
 
         } else if (täring.getVeeretus() == 2) {
             gc.fillOval(25, 25, 10, 10);// vasak tulp ülemine
@@ -272,9 +292,36 @@ public class MustRuut extends Application {
             gc.fillOval(75, 50, 10, 10);// parem tulp keskmine
             gc.fillOval(75, 75, 10, 10);// parem tulp alumine
 
-
         }
         return canvas;
     }
 
-}
+    private BarChart<String, Number> statistikaGraaf() {
+        Stage stage = new Stage();
+
+
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
+        bc.setTitle("Täringu statistika");
+        xAxis.setLabel("Täringud");
+        yAxis.setLabel("Veeretusi");
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Väärtused");
+
+        bc.setBarGap(3);
+        bc.setCategoryGap(20);
+        HashMap<Integer, Integer> stat = täring.getStatistika();
+        for (Integer i :
+                stat.keySet()) {
+            series1.getData().add(new XYChart.Data(Integer.toString(i), stat.get(i)));
+        }
+        //Scene scene = new Scene(bc, 800, 600);
+        bc.getData().addAll(series1);
+        //stage.setScene(scene);
+
+        return  bc;
+
+    }
+    }
