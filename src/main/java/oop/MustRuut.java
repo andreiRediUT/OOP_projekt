@@ -48,7 +48,7 @@ public class MustRuut extends Application {
         Button btn1 = new Button("Veereta");
         Button btn2 = new Button("Anna käik üle.");  // põhinupud mängus
 
-        FileInputStream inputstream = new FileInputStream("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\pildid\\voit.gif");
+        FileInputStream inputstream = new FileInputStream("src/main/pildid/voit.gif");
         Image pilt = new Image(inputstream);
 
         ImageView voidupilt = new ImageView(pilt);
