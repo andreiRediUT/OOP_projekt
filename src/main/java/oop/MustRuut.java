@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,16 +21,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -39,7 +36,7 @@ import java.util.Optional;
 public class MustRuut extends Application {
 
     KuueNumbriTäring täring = new KuueNumbriTäring();
-    Skoor mängu_skoor = new Skoor(91);
+    Skoor mängu_skoor = new Skoor(10);
 
 
     public static void main(String[] args) {
@@ -47,26 +44,35 @@ public class MustRuut extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws FileNotFoundException {
+    public void start(Stage primaryStage) throws IOException {
         Button btn1 = new Button("Veereta");
-        Button btn2 = new Button("Anna käik üle.");
+        Button btn2 = new Button("Anna käik üle.");  // põhinupud mängus
+
+        FileInputStream inputstream = new FileInputStream("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\pildid\\voit.gif");
+        Image pilt = new Image(inputstream);
+
+        ImageView voidupilt = new ImageView(pilt);
+        voidupilt.setFitHeight(75);
+        voidupilt.setPreserveRatio(true);
+
+        inputstream.close();
 
         BorderPane border = new BorderPane();
 
-        HBox nupud = new HBox(btn1, btn2);
+        HBox nupud = new HBox(btn1, btn2);    // nupud on horisontaalselt
         nupud.setAlignment(Pos.CENTER);
-        nupud.setSpacing(10);
+        nupud.setSpacing(10);                 // nupude vahe 10 px ja keskel
 
         VBox kesk = täring_vooruskoor(nupud, true);
 
 
-        kesk.setPadding(new Insets(15, 100, 15, 100));
+        kesk.setPadding(new Insets(15, 100, 15, 100));    // ruum objekti ümber
         nupud.setCenterShape(true);
         border.setPadding(new Insets(15, 10, 12, 12));
 
         border.setCenter(kesk);
         border.setTop(title());
-        border.setLeft(mängija("Mängija 1", 0, true));
+        border.setLeft(mängija("Mängija 1", 0, true));     // mängijate info vasakul-paremal
         border.setRight(mängija("Mängija 2", 0, false));
         Text teade = new Text("Võidab see, kes saab enne üle 91 punkti.");
         teade.setFont(Font.font("Verdana", 20));
@@ -79,10 +85,11 @@ public class MustRuut extends Application {
         primaryStage.setMinWidth(570);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Täringumäng");
-
         primaryStage.show();
+
         reeglid();
 
+        // esimese nupu sündmuse jälgimine
 
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -90,42 +97,53 @@ public class MustRuut extends Application {
 
                 täring.täringuVeeretus();
 
-                //veeretus_skoor = new VBox(joonistaTulemus())
-
                 mängu_skoor.setVooruskoor(täring.getVeeretus());
 
 
                 if (täring.getVeeretus() == 1) {
                     mängu_skoor.poole_vahetus(true);
-                    // veeretus.setFill(Color.RED);  TODO teha punaseks täring kui 1
                 }
 
                 border.setCenter(täring_vooruskoor(nupud, false));
+
+                // muudab skoori vastavalt
+
                 border.setLeft(mängija("Mängija 1 ", mängu_skoor.getSkoor()[0], mängu_skoor.isEsimese_kord()));
                 border.setRight(mängija("Mängija 2 ", mängu_skoor.getSkoor()[1], !mängu_skoor.isEsimese_kord()));
 
-                if (võiduTeade()) {
-                    mängu_skoor.setVooruskoor(0);
-                    mängu_skoor.setSkoor(new int[]{0, 0});
 
-                    border.setCenter(täring_vooruskoor(nupud, true));
+                // kui keegi võitnud, siis nullib kõik ära
+                try {
+                    if (võiduTeade(voidupilt)) {
+                        mängu_skoor.setVooruskoor(0);
+                        mängu_skoor.setSkoor(new int[]{0, 0});
 
+                        border.setCenter(täring_vooruskoor(nupud, true));
+
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         });
 
+        // jälgib kui keegi annab käigu üle
 
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mängu_skoor.liidaSkoor();
                 mängu_skoor.poole_vahetus(false);
+
+                // vastavalt mängijale liidab vooruskoori üldskoorile
+
                 border.setLeft(mängija("Mängija 1 ", mängu_skoor.getSkoor()[0], mängu_skoor.isEsimese_kord()));
                 border.setRight(mängija("Mängija 2 ", mängu_skoor.getSkoor()[1], !mängu_skoor.isEsimese_kord()));
-                System.out.println(Arrays.toString(mängu_skoor.getSkoor()));
 
 
-                //  veeretus.setText("");  TODO
+                border.setCenter(täring_vooruskoor(nupud, true));  // nullib vooruskoori
+
+
             }
         });
     }
@@ -134,17 +152,18 @@ public class MustRuut extends Application {
     private VBox mängija(String nimi, int skoor, boolean tema_kord) {
         Text nimetus = new Text(nimi);
         nimetus.setFont(Font.font("Verdana", 20));
-        Text m_skoor = new Text(Integer.toString(skoor));
+        Text m_skoor = new Text(Integer.toString(skoor));   // mängija skoor
 
         m_skoor.setFont(Font.font("Verdana", 100));
 
         if (tema_kord)
-            return new VBox(nimetus, m_skoor, kelle_kord());
+            return new VBox(nimetus, m_skoor, kelle_kord());   // viitab kelle kord on
 
         return new VBox(nimetus, m_skoor);
     }
 
-    private boolean võiduTeade() {
+    private boolean võiduTeade(ImageView pilt) throws FileNotFoundException {   // Viskab ALERT akna ette kui keegi võidab
+
         if (mängu_skoor.kasOnVõitnud()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Võit");
@@ -156,36 +175,29 @@ public class MustRuut extends Application {
             );
             alert.setContentText("Kas tahate uuesti mängida?");
 
-//            Image pilt = new Image(getClass()
-//                    .getResource("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\java\\oop\\pildid\\tärig.png")
-//                    .toExternalForm());
-//            ImageView imageView = new ImageView(pilt);
-//            alert.setGraphic(imageView);
-//            File tempFile = new File("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\java\\oop\\pildid\\täring.png");
+            alert.setGraphic(pilt);
 
             // TODO lisada ikoon võiduteatele
-            // alert.setGraphic(new ImageView(this.getClass().getResource("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\java\\oop\\pildid\\täring.png").toString()));
+            // alert.setGraphic(new ImageView(this.getClass().getResource("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\pildid\\täring.png").toExternalForm()));
 
 
             ButtonType uuesti = new ButtonType("Jah");
             ButtonType exit = new ButtonType("Ei");
             ButtonType stats = new ButtonType("Statistika");
-            alert.getButtonTypes().setAll(uuesti, exit, stats);
+            alert.getButtonTypes().setAll(uuesti, exit, stats);   // lisab nupud aknale
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == uuesti) {
-                System.out.println("JAH");
 
                 return true;
 
-            } else if (result.get() == exit) {
+            } else if (result.get() == exit) {     // mäng läheb kinni
                 System.out.println("EI");
                 Platform.exit();
             } else {   // STATISTIKA kuvamine
                 Label secondLabel = new Label("Statisti,a");
                 Scene secondScene = new Scene(statistikaGraaf(), 400, 300);
 
-                // New window (Stage)
                 Stage newWindow = new Stage();
                 newWindow.setTitle("Statistika");
 
@@ -198,6 +210,11 @@ public class MustRuut extends Application {
 
     }
 
+    /**
+     * @param nupud annab edasi nupud
+     * @param algus kas kuvada kõik 0 alguses või mitte
+     * @return tagastab vertikaalse objekti
+     */
     private VBox täring_vooruskoor(HBox nupud, boolean algus) {
         Text skoor = new Text("");
         skoor.setFont(Font.font(50));
@@ -321,7 +338,7 @@ public class MustRuut extends Application {
         bc.getData().addAll(series1);
         //stage.setScene(scene);
 
-        return  bc;
+        return bc;
 
     }
-    }
+}
