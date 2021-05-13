@@ -8,6 +8,9 @@ public class Skoor {
     private int vooruskoor;
     private boolean esimese_kord;
 
+    public void setSkoor(int[] skoor) {
+        this.skoor = skoor;
+    }
 
     /**
      * @param lõpp_skoor konstruktortoriga saab määrata, mis skoorini täringumängu mängitakse.

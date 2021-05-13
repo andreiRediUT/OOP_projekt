@@ -12,16 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -29,10 +27,8 @@ import java.util.Optional;
 
 public class MustRuut extends Application {
 
-
     KuueNumbriTäring täring = new KuueNumbriTäring();
-
-    Skoor mängu_skoor = new Skoor(91);
+    Skoor mängu_skoor = new Skoor(10);
 
 
     public static void main(String[] args) {
@@ -84,7 +80,9 @@ public class MustRuut extends Application {
         Scene scene = new Scene(border, 750 , 350);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Täringumäng");
+
         primaryStage.show();
+        reeglid();
 
 
         btn1.setOnAction(new EventHandler<ActionEvent>() {
@@ -109,23 +107,14 @@ public class MustRuut extends Application {
                 border.setLeft(mängija("Mängija 1 ", mängu_skoor.getSkoor()[0], mängu_skoor.isEsimese_kord()));
                 border.setRight(mängija("Mängija 2 ", mängu_skoor.getSkoor()[1], !mängu_skoor.isEsimese_kord()));
 
-                System.out.println(mängu_skoor.keegiVõitnud());
-                if (mängu_skoor.kasOnVõitnud()) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Confirmation Dialog");
-                    alert.setHeaderText("Look, a Confirmation Dialog");
-                    alert.setContentText("Are you ok with this?");
-                    System.out.println(mängu_skoor.isEsimese_kord());
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK){
-                        System.out.println("JAH");
-                    } else {
-                        System.out.println("EI");
-                        Platform.exit();
-                    }
+                if (võiduTeade()) {
+                    mängu_skoor.setVooruskoor(0);
+                    mängu_skoor.setSkoor(new int[]{0,0});
+
+                    skoor.setText("0");
+                    veeretus.setText("");
 
                 }
-
             }
         });
 
@@ -133,20 +122,14 @@ public class MustRuut extends Application {
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-
                 mängu_skoor.liidaSkoor();
                 mängu_skoor.poole_vahetus(false);
                 border.setLeft(mängija("Mängija 1 ", mängu_skoor.getSkoor()[0], mängu_skoor.isEsimese_kord()));
                 border.setRight(mängija("Mängija 2 ", mängu_skoor.getSkoor()[1], !mängu_skoor.isEsimese_kord()));
                 System.out.println(Arrays.toString(mängu_skoor.getSkoor()));
 
-
                 skoor.setText("0");
                 veeretus.setText("");
-
-
-
             }
         });
     }
@@ -164,6 +147,47 @@ public class MustRuut extends Application {
         return new VBox(nimetus, m_skoor);
     }
 
+    private boolean võiduTeade() {
+        if (mängu_skoor.kasOnVõitnud()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Võit");
+            int võitja = mängu_skoor.isEsimese_kord()? 1: 2;
+            alert.setHeaderText("" +
+                    "Palju õnne!  Võitis Mängija  "
+                    + võitja
+                    + "\nSkooriga " + (mängu_skoor.getSkoor()[võitja-1] + mängu_skoor.getVooruskoor())
+            );
+            alert.setContentText("Kas tahate uuesti mängida?");
+
+//            Image pilt = new Image(getClass()
+//                    .getResource("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\java\\oop\\pildid\\tärig.png")
+//                    .toExternalForm());
+//            ImageView imageView = new ImageView(pilt);
+//            alert.setGraphic(imageView);
+//            File tempFile = new File("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\java\\oop\\pildid\\täring.png");
+
+            // TODO lisada ikoon võiduteatele
+           // alert.setGraphic(new ImageView(this.getClass().getResource("C:\\Users\\redjo\\proge\\Oop\\OOP_projekt\\src\\main\\java\\oop\\pildid\\täring.png").toString()));
+
+
+            ButtonType uuesti = new ButtonType("Jah");
+            ButtonType exit = new ButtonType("Ei");
+            alert.getButtonTypes().setAll(uuesti, exit);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == uuesti){
+                System.out.println("JAH");
+
+                return true;
+
+            } else {
+                System.out.println("EI");
+                Platform.exit();
+            }
+        }
+        return false;
+    }
+
     private Text kelle_kord() {
         Text nimetus = new Text("KORD");
         nimetus.setFont(Font.font("Verdana", FontWeight.BOLD,  35));
@@ -178,9 +202,28 @@ public class MustRuut extends Application {
         t.setFont(Font.font("Verdana", 25));
         StackPane pealkiri = new StackPane(t);
 
-        pealkiri.setStyle("-fx-background-colour: #FF0000;");
+        //pealkiri.setStyle("-fx-background-colour: #FF0000;");
 
         return pealkiri;
+    }
+
+    private void reeglid() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Reeglid");
+        alert.setHeaderText("Täringumäng");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        alert.setContentText("" +
+                "Mängijate viskevoorud kordamööda.\n" +
+                "Ühes viskevoorus võib mängija visata täringuid ükskõik mitu korda," +
+                " aga kui tuleb 1, siis kogusumma nullitakse ja viskeõigus läheb teisele mängijale. \n" +
+                "Muidu viskel saadud tulemus liidetakse kogusummale. \n\n" +
+                "Võidab see, kes saab enne üle 91 punkti."
+
+        );
+
+        alert.showAndWait();
+
     }
 
 
