@@ -1,3 +1,5 @@
+package oop;
+
 import java.util.Scanner;
 
 public class Täringumäng {
@@ -32,7 +34,7 @@ public class Täringumäng {
             System.out.println(esimese_kord ? " ".repeat(40) + "Esimene mängija veeretas " + täring.getVeeretus() : " ".repeat(40) + "Teine Mängija veeretas " + täring.getVeeretus());
 
 
-            if (täring.getVeeretus() == 1) poole_vahetus(true);
+            if (täring.getVeeretus() == 1) skoor.poole_vahetus(true);
 
             System.out.println("Käigu üleandmiseks, kirjuta  - \"ff\" ");
 
@@ -44,7 +46,7 @@ public class Täringumäng {
             String input = scanner.nextLine();
 
             if (input.equals("ff")) {
-                this.poole_vahetus(false);
+                skoor.poole_vahetus(false);
                 continue;
             }
 
@@ -63,24 +65,8 @@ public class Täringumäng {
 
     }
 
-    /**
-     * @param täring Kui on True, siis kutsuti funktsioon täringuviskest "1". Üldskoorile ei liideta vooruskoor
-     *               Voorukord läheb teisele mängijale üle.
-     *               Kui on False, siis mängija loobus voorust vabatahtlikult, kirjutades "ff".
-     *               Liidetake vooruskoor üldskoorile ja kord läheb teisele mängija üle.
-     */
-    protected void poole_vahetus(boolean täring) {
 
-        if (!täring) this.skoor.liidaSkoor(esimese_kord);
 
-        this.skoor.setVooruskoor(0);   // kui on null, siis nullib vooruskoori
-
-        this.esimese_kord = !esimese_kord;
-
-        this.skoor.prindiSkoor();
-        System.out.println("Nüüd on " + (esimese_kord ? " Esimese mängija" : "Teise mängija kord"));
-
-    }
 
 //    public int random_number() {
 //       return  (int) ((Math.random() * (6 - 1)) + 1);
