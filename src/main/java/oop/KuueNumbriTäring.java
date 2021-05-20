@@ -2,16 +2,19 @@ package oop;
 
 import java.util.HashMap;
 
-public class KuueNumbriTäring {
 
+//Täringumäng.
+// Klass täringu veeretustulemuse saamiseks
+//täringuVeeretus tuleb meetodiga Math.random ja saadakse kätte getVeeretus() ega
+
+public class KuueNumbriTäring {
+    int tulemus;
     int veeretus;
     private HashMap<Integer, Integer> statistika = new HashMap<>();
 
 
-    /**
-     * Konstruktor genereerib täringuveeretusele esimese juhusliku numbri
-     */
     public KuueNumbriTäring() {
+        this.tulemus = 0;
         this.veeretus = (int) (Math.random() * 6 + 1);
         this.statistika.put(1,0);
         this.statistika.put(2,0);
@@ -21,9 +24,6 @@ public class KuueNumbriTäring {
         this.statistika.put(6,0);
     }
 
-    /**
-     * Meetod genereerib numbri 1-6ni.
-     */
     public void täringuVeeretus() {
 
         this.veeretus = (int) (Math.random() * 6 + 1);
@@ -36,12 +36,6 @@ public class KuueNumbriTäring {
         return statistika;
     }
 
-    /**
-     * @return nende get meetoditega tagastakse vastavad väärtused
-     */
-
-    public int getVeeretus() {
-        return veeretus;
-    }
+    public int getVeeretus() {return veeretus;}
 
 }
